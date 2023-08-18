@@ -3,6 +3,9 @@
 
 Welcome! This README provides instructions on how to run both the frontend and backend locally.
 
+
+clone this repository in your system
+
 ## Backend Setup
 
 1. Navigate to the `server` directory:
