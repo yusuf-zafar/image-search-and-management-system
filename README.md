@@ -4,9 +4,9 @@
 Welcome! This README provides instructions on how to run both the frontend and backend locally.
 
 
-## Note: Clone this repository in your system.
+## 1: Clone this repository in your system.
 
-## Backend Setup
+## 2: Backend Setup
 
 1. Navigate to the `server` directory:
 `cd server`
@@ -20,7 +20,7 @@ Welcome! This README provides instructions on how to run both the frontend and b
 The backend server should now be running on http://localhost:5000.
 
 
-## Frontend Setup
+## 3: Frontend Setup
 
 1. Navigate to the `client` directory:
 `cd client`
