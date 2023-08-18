@@ -4,18 +4,18 @@
 Welcome! This README provides instructions on how to run both the frontend and backend locally.
 
 
-clone this repository in your system
+## Note: Clone this repository in your system.
 
 ## Backend Setup
 
 1. Navigate to the `server` directory:
-cd server
+`cd server`
 
 2. Install the required dependencies:
-npm install
+`npm install`
 
 3. Start the backend server:
-node server.js
+`node server.js`
 
 The backend server should now be running on http://localhost:5000.
 
@@ -23,13 +23,13 @@ The backend server should now be running on http://localhost:5000.
 ## Frontend Setup
 
 1. Navigate to the `client` directory:
-cd client
+`cd client`
 
 2. Install the required dependencies:
-npm install
+`npm install`
 
 3. Start the frontend development server:
-npm start
+`npm start`
 
 The frontend development server should now be running on http://localhost:3000.
 
