@@ -20,7 +20,7 @@ function ImagePopup({ image, onClose }) {
         <p className="popup-keywords">
         Keywords:
           {image.keywords.map((keyword) => (
-            <span> {keyword} ,</span>
+            <span> {keyword}, </span>
           ))}
         </p>
         <p className="popup-tags">
