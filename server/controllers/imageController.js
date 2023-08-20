@@ -26,7 +26,8 @@ exports.uploadImage = [
           .trim()
           .replace(/\s+/g, ",")
           .split(",")
-          .filter((keyword) => keyword !== ""),
+          .filter((keyword) => keyword !== "")
+          .map((keyword) => keyword.toLowerCase()),
         tags: req.body.tags,
         imageUrl: path.resolve(__dirname, "../uploads", req.file.filename),
         name: req.file.filename,
@@ -60,7 +61,8 @@ exports.searchImage = async (req, res) => {
         .trim()
         .replace(/\s+/g, ",")
         .split(",")
-        .filter((keyword) => keyword !== "");
+        .filter((keyword) => keyword !== "")
+        .map((keyword) => keyword.toLowerCase());
       //  console.log(keywordsArray)
       query.keywords = { $in: keywordsArray };
     }
