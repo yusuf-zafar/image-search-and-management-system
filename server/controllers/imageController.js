@@ -2,7 +2,6 @@ const Image = require("../models/image");
 const multer = require("multer");
 const path = require("path");
 
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.resolve(__dirname, "../uploads"));
@@ -23,7 +22,11 @@ exports.uploadImage = [
       const image = new Image({
         title: req.body.title,
         description: req.body.description,
-        keywords: req.body.keywords.split(",").map((keyword) => keyword.trim()),
+        keywords: req.body.keywords
+          .trim()
+          .replace(/\s+/g, ",")
+          .split(",")
+          .filter((keyword) => keyword !== ""),
         tags: req.body.tags,
         imageUrl: path.resolve(__dirname, "../uploads", req.file.filename),
         name: req.file.filename,
@@ -53,44 +56,47 @@ exports.searchImage = async (req, res) => {
     const query = {};
     if (title) query.title = { $regex: title, $options: "i" };
     if (keywords) {
-        const keywordsArray = keywords.replace(/\s+/g, ',').split(",");
-        query.keywords = { $in: keywordsArray };
-      }
+      const keywordsArray = keywords
+        .trim()
+        .replace(/\s+/g, ",")
+        .split(",")
+        .filter((keyword) => keyword !== "");
+      //  console.log(keywordsArray)
+      query.keywords = { $in: keywordsArray };
+    }
 
     const endDate = new Date(toDate);
-          endDate.setHours(23, 59, 59, 999);
+    endDate.setHours(23, 59, 59, 999);
 
     if (fromDate && toDate) {
-        if (fromDate === toDate) {
-          query.createdAt = {
-            $gte: new Date(fromDate),
-            $lte: endDate,
-          };
-        } else {
-          query.createdAt = {
-            $gte: new Date(fromDate),
-            $lte: endDate,
-          };
-        }
-      } else if (fromDate) {
-        query.createdAt = { $gte: new Date(fromDate) };
-      } else if (toDate) {
-        query.createdAt = { $lte: endDate };
+      if (fromDate === toDate) {
+        query.createdAt = {
+          $gte: new Date(fromDate),
+          $lte: endDate,
+        };
+      } else {
+        query.createdAt = {
+          $gte: new Date(fromDate),
+          $lte: endDate,
+        };
       }
+    } else if (fromDate) {
+      query.createdAt = { $gte: new Date(fromDate) };
+    } else if (toDate) {
+      query.createdAt = { $lte: endDate };
+    }
 
     const sortOptions = {};
     sortOptions[sortField] = sortOrder === "asc" ? 1 : -1;
-    
-    const totalCount = await Image.countDocuments(query); 
+
+    const totalCount = await Image.countDocuments(query);
     const images = await Image.find(query)
       .sort(sortOptions)
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
-      res.json({images, totalCount});
+    res.json({ images, totalCount });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
